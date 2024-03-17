@@ -60,8 +60,9 @@ export default function MobileMenu({ mobileMenuOpen, setMobileMenuOpen }) {
             </div>
             <div className="py-6">
               <Link
-                href="#"
+                to="/login"
                 className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 bg-green-700 text-gray-200 shadow-md shadow-gray-800/60 hover:bg-green-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-800 hover:cursor-pointer"
+                onClick={() => setMobileMenuOpen(false)}
               >
                 Log in
               </Link>
