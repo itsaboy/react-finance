@@ -18,8 +18,6 @@ export const useFormLookup = () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization:
-          "a404c2e457182e52fb53ae5e006a8945310e5486837e8fdccfe8e06774c5363e",
       },
       body: JSON.stringify({
         query: {
