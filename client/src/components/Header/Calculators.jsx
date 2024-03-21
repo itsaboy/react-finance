@@ -6,7 +6,7 @@ import { BREAKEVEN_CALCS } from "../../data";
 import { FinanceContext } from "../../context/FinanceContext";
 
 export default function Calculators() {
-  const { setOptionStrategy } = useContext(FinanceContext);
+  const { optionStrategy, setOptionStrategy } = useContext(FinanceContext);
 
   return (
     <Popover className="relative">
@@ -33,13 +33,13 @@ export default function Calculators() {
             {BREAKEVEN_CALCS.map((item) => (
               <div
                 key={item.name}
-                className="group relative flex gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-green-100"
+                className={`group relative flex gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-green-100 ${optionStrategy === item.name && "bg-gray-400 hover:bg-gray-400 animate-pulse"}`}
               >
-                <div className="flex-auto divide-y-2 divide-gray-400">
+                <div className="flex-auto divide-y-2 divide-gray-600">
                   <Link
                     to={item.to}
                     onClick={() => setOptionStrategy(item.name)}
-                    className="block font-semibold text-gray-900"
+                    className={`block font-semibold text-gray-900`}
                   >
                     {item.name}
                     <span className="absolute inset-0" />

@@ -6,7 +6,7 @@ import { FinanceContext } from "../../context/FinanceContext";
 import { SEC_FORMS } from "../../data";
 
 export default function SECForms() {
-  const { setSECForm } = useContext(FinanceContext);
+  const { SECForm ,setSECForm } = useContext(FinanceContext);
   return (
     <Popover className="relative">
       <Popover.Button className="text-sm font-semibold leading-6 text-gray-800 inline-flex items-center gap-x-1.5 hover:animate-pulse">
@@ -32,9 +32,9 @@ export default function SECForms() {
             {SEC_FORMS.map((item) => (
               <div
                 key={item.name}
-                className="group relative flex gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-green-100"
+                className={`group relative flex gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-green-100 ${SECForm === item.name && "bg-gray-400 hover:bg-gray-400  animate-pulse"}`}
               >
-                <div className="flex-auto divide-y-2 divide-gray-400">
+                <div className="flex-auto divide-y-2 divide-gray-600">
                   <Link
                     to={item.to}
                     onClick={() => setSECForm(item.name)}

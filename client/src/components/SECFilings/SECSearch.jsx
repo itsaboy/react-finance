@@ -2,11 +2,25 @@ import { Fragment, useState, useContext } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { FinanceContext } from "../../context/FinanceContext";
+import { useFormLookup } from "../../hooks/useFormLookup";
 
 export default function SECSearch({ openSearch, setOpenSearch }) {
   const [ticker, setTicker] = useState("XYZ");
   const [numberOfResults, setNumberOfResults] = useState(1);
   const { SECForm } = useContext(FinanceContext);
+
+  const {
+    formLookup,
+    sendSuccess,
+    setSendSuccess,
+    sendError,
+    setSendError,
+    sendLoading,
+  } = useFormLookup();
+
+  const handleSubmit = async (ticker, SECForm, numberOfResults) => {
+    await formLookup(ticker, SECForm, numberOfResults);
+  };
 
   return (
     <Transition.Root show={openSearch} as={Fragment}>
@@ -46,13 +60,13 @@ export default function SECSearch({ openSearch, setOpenSearch }) {
                       </div>
                       <div className="mt-1">
                         <p className="text-sm text-green-200">
-                          {SECForm === "Form 10-K" &&
+                          {SECForm === "10-K" &&
                             "Provides a comprehensive overview of the company's business and financial condition, including audited financial statements, management's discussion and analysis of financial conditions, and disclosures about market risk"}
-                          {SECForm === "Form 10-Q" &&
+                          {SECForm === "10-Q" &&
                             "Provides a comprehensive overview of the company's business and financial condition, including audited financial statements, management's discussion and analysis of financial conditions, and disclosures about market risk"}
-                          {SECForm === "Form 8-K" &&
+                          {SECForm === "8-K" &&
                             "Provides a comprehensive overview of the company's business and financial condition, including audited financial statements, management's discussion and analysis of financial conditions, and disclosures about market risk"}
-                          {SECForm === "Form 4" &&
+                          {SECForm === "4" &&
                             "Provides a comprehensive overview of the company's business and financial condition, including audited financial statements, management's discussion and analysis of financial conditions, and disclosures about market risk"}
                         </p>
                       </div>
@@ -95,7 +109,9 @@ export default function SECSearch({ openSearch, setOpenSearch }) {
                                 type="number"
                                 required
                                 className="my-2 block w-full rounded-md border-0 py-2.5 pl-2 text-gray-950 shadow-sm ring-1 ring-inset ring-gray-900 placeholder:text-gray-900 focus:ring-2 focus:ring-inset focus:ring-gray-800 sm:text-sm sm:leading-6 hover:cursor-pointer"
-                                onChange={(e) => setNumberOfResults(e.target.value)}
+                                onChange={(e) =>
+                                  setNumberOfResults(e.target.value)
+                                }
                                 value={numberOfResults}
                               >
                                 <option>1</option>
@@ -127,7 +143,9 @@ export default function SECSearch({ openSearch, setOpenSearch }) {
                               <button
                                 type="button"
                                 className="inline-flex items-center gap-x-2 rounded-lg bg-green-700 px-3.5 py-2.5 text-sm font-semibold text-gray-200 shadow-md shadow-gray-800/60 hover:bg-green-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-800 hover:cursor-pointer"
-                                // onClick={}
+                                onClick={() =>
+                                  handleSubmit(ticker, SECForm, numberOfResults)
+                                }
                                 // disabled={
                                 //   underlyingPrice === 0 ||
                                 //   strikePrice === 0 ||
@@ -135,7 +153,10 @@ export default function SECSearch({ openSearch, setOpenSearch }) {
                                 // }
                               >
                                 Search
-                                <MagnifyingGlassIcon className="-mr-0.5 h-5 w-5" aria-hidden="true" />
+                                <MagnifyingGlassIcon
+                                  className="-mr-0.5 h-5 w-5"
+                                  aria-hidden="true"
+                                />
                               </button>
                             </div>
                           </div>

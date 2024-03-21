@@ -6,13 +6,21 @@ import { FinanceContext } from "./context/FinanceContext";
 import "./App.css";
 
 function App() {
-  const [optionStrategy, setOptionStrategy] = useState("Long Call Breakeven");
-  const [SECForm, setSECForm] = useState("Form 10-K");
+  const [optionStrategy, setOptionStrategy] = useState("None");
+  const [SECForm, setSECForm] = useState("None");
+  const [SECData, setSECData] = useState([]);
 
   return (
     <div className="body-container">
       <FinanceContext.Provider
-        value={{ optionStrategy, setOptionStrategy, SECForm, setSECForm }}
+        value={{
+          optionStrategy,
+          setOptionStrategy,
+          SECForm,
+          setSECForm,
+          SECData,
+          setSECData,
+        }}
       >
         <Header />
         <main className="bg-transparent">

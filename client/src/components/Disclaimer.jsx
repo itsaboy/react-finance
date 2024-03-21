@@ -1,6 +1,18 @@
+import { useEffect, useContext } from "react";
+import BGGradient from "./BGGradient";
+import { FinanceContext } from "../context/FinanceContext";
+
 export default function Disclaimer() {
+  const { setSECForm, setOptionStrategy } = useContext(FinanceContext);
+
+  useEffect(() => {
+    setOptionStrategy("None");
+    setSECForm("None");
+  });
+
   return (
     <div className="bg-transparent px-6 py-32 lg:px-8">
+      <BGGradient />
       <div className="mx-auto max-w-3xl text-base leading-7 text-gray-800">
         <p className="text-base font-semibold leading-7 text-red-600">
           Important

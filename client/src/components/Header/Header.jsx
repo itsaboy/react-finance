@@ -14,6 +14,7 @@ import AALogo from "../../assets/AALogo.svg";
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [popoverVisible, setPopoverVisible] = useState(false);
 
   return (
     <header className="bg-green-200 border-b-2 border-green-300 h-full w-full">
@@ -29,7 +30,8 @@ export default function Header() {
             )}
             {mobileMenuOpen && (
               <h1 className="text-4xl text-gray-800">
-                <span className="text-green-800">A</span>sset <span className="text-green-800">A</span>tlus
+                <span className="text-green-800">A</span>sset{" "}
+                <span className="text-green-800">A</span>tlus
               </h1>
             )}
           </div>
