@@ -6,7 +6,7 @@ export const useFormLookup = () => {
   const [sendError, setSendError] = useState(null);
   const [sendLoading, setSendLoading] = useState(false);
 
-  const { SECData, setSECData } = useContext(FinanceContext);
+  const { setSECData } = useContext(FinanceContext);
 
   const formLookup = async (ticker, form, numberOfResults) => {
     setSendLoading(true);

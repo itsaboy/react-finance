@@ -1,12 +1,11 @@
 import { useState, useContext, useEffect } from "react";
-import SECSearch from "./SECSearch";
-import { FinanceContext } from "../../context/FinanceContext";
+import SECSearch from "../components/SECFilings/SECSearch";
+import { FinanceContext } from "../context/FinanceContext";
 import {
   MagnifyingGlassCircleIcon,
   DocumentMagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
-import { useFormLookup } from "../../hooks/useFormLookup";
-import BGGradient from "../BGGradient";
+import { useFormLookup } from "../hooks/useFormLookup";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -14,17 +13,17 @@ function classNames(...classes) {
 
 export default function SECFilings() {
   const [openSearch, setOpenSearch] = useState(false);
-  const { SECForm, SECData, setOptionStrategy } = useContext(FinanceContext);
+  const { setActivePage, SECForm, SECData, setOptionStrategy } = useContext(FinanceContext);
 
   useEffect(() => {
+    setActivePage("sec-filings");
     setOptionStrategy("None");
-  });
+  }, []);
 
   const { sendLoading } = useFormLookup();
 
   return (
     <div className="mx-auto flex flex-col max-w-7xl items-center justify-between px-8 mt-2">
-      <BGGradient />
       {SECForm === "None" ? (
         <div className="bg-gray-600 max-w-lg px-6 py-12 shadow-lg sm:rounded-2xl sm:px-12 shadow-gray-950/60 bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-80">
           <h3 className="text-2xl text-left p-10 text-gray-300">

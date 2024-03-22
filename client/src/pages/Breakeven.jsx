@@ -4,8 +4,7 @@ import {
   CalculatorIcon,
 } from "@heroicons/react/20/solid";
 import { FinanceContext } from "../context/FinanceContext";
-import BGGradient from "./BGGradient";
-import BreakevenResult from "./BreakevenResult";
+import BreakevenResult from "../components/BreakevenResult";
 
 export default function Breakeven() {
   const [ticker, setTicker] = useState("XYZ");
@@ -17,11 +16,12 @@ export default function Breakeven() {
   const [tooltipOpen, setTooltipOpen] = useState(false);
   const [resultOpen, setResultOpen] = useState(false);
 
-  const { optionStrategy, setSECForm } = useContext(FinanceContext);
+  const { setActivePage, optionStrategy, setSECForm } = useContext(FinanceContext);
 
   useEffect(() => {
+    setActivePage("calculators");
     setSECForm("None");
-  });
+  }, []);
 
   const calculateCall = (underlyingPrice, strikePrice, premiumPrice) => {
     const breakevenCalc = parseFloat(strikePrice) + parseFloat(premiumPrice);
@@ -47,7 +47,6 @@ export default function Breakeven() {
 
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8">
-      <BGGradient />
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <h2 className="mt-6 text-center text-2xl font-semibold leading-9 tracking-tight text-gray-800">
           {optionStrategy === "Long Call Breakeven" && "Long Call Option"}

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { Popover } from "@headlessui/react";
 import { Bars3Icon } from "@heroicons/react/24/outline";
@@ -11,10 +11,12 @@ import Calculators from "./Calculators";
 import SECForms from "./SECForms";
 import MobileMenu from "./MobileMenu";
 import AALogo from "../../assets/AALogo.svg";
+import { FinanceContext } from "../../context/FinanceContext";
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [popoverVisible, setPopoverVisible] = useState(false);
+
+  const { activePage } = useContext(FinanceContext);
 
   return (
     <header className="bg-green-200 border-b-2 border-green-300 h-full w-full">
@@ -50,7 +52,9 @@ export default function Header() {
           <button className="relative">
             <Link
               to="/"
-              className="text-sm font-semibold leading-6 text-gray-800 inline-flex items-center gap-x-1.5 hover:animate-pulse"
+              className={`text-sm font-semibold leading-6 text-gray-800 inline-flex items-center gap-x-1.5 hover:animate-pulse ${
+                activePage === "home" && "underline underline-offset-2"
+              }`}
             >
               <HomeIcon
                 className="-ml-0.5 h-5 w-5 text-green-600"
@@ -67,7 +71,9 @@ export default function Header() {
           <button className="relative">
             <Link
               to="/disclaimer"
-              className="text-sm font-semibold leading-6 text-red-800 inline-flex items-center gap-x-1.5 hover:animate-pulse"
+              className={`text-sm font-semibold leading-6 text-red-800 inline-flex items-center gap-x-1.5 hover:animate-pulse ${
+                activePage === "disclaimer" && "underline underline-offset-2"
+              }`}
             >
               <ExclamationTriangleIcon
                 className="-ml-0.5 h-5 w-5 text-red-600"
@@ -78,12 +84,14 @@ export default function Header() {
           </button>
         </Popover.Group>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <Link
-            to="/login"
-            className="inline-flex items-center gap-x-2 rounded-md bg-green-700 px-3.5 py-2.5 text-sm font-semibold text-gray-200 shadow-md shadow-gray-800/60 hover:bg-green-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-800"
-          >
-            Log in <UserIcon className="-mr-0.5 h-5 w-5" aria-hidden="true" />
-          </Link>
+          {activePage === "login" || activePage === "signup" ? null : (
+            <Link
+              to="/login"
+              className="inline-flex items-center gap-x-2 rounded-md bg-green-700 px-3.5 py-2.5 text-sm font-semibold text-gray-200 shadow-md shadow-gray-800/60 hover:bg-green-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-800"
+            >
+              Log in <UserIcon className="-mr-0.5 h-5 w-5" aria-hidden="true" />
+            </Link>
+          )}
         </div>
       </nav>
 

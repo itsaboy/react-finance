@@ -1,19 +1,20 @@
 import { useEffect, useContext } from "react";
 import landing from "../assets/landing.webp";
-import BGGradient from "./BGGradient";
+import BGGradient from "../components/BGGradient";
 import { FinanceContext } from "../context/FinanceContext";
 
 export default function Home() {
-  const { setSECForm, setOptionStrategy } = useContext(FinanceContext);
+  const { setActivePage, setSECForm, setOptionStrategy } = useContext(FinanceContext);
 
   useEffect(() => {
+    setActivePage("home");
     setOptionStrategy("None");
     setSECForm("None");
-  });
+  }, []);
 
   return (
     <div className="relative">
-      <BGGradient />
+      
       <div className="mx-auto max-w-7xl lg:grid lg:grid-cols-12 lg:gap-x-8 lg:px-8">
         <div className="px-6 pb-24 pt-10 sm:pb-32 lg:col-span-7 lg:px-0 lg:pb-56 lg:pt-48 xl:col-span-6">
           <div className="mx-auto max-w-2xl lg:mx-0">
