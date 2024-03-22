@@ -4,6 +4,7 @@ import { User } from "../models/userModel.js";
 const createToken = (_id) => {
   return jwt.sign({ _id }, process.env.JWT_SECRET, { expiresIn: "1d" });
 };
+
 // login
 
 export const loginUser = async (req, res) => {

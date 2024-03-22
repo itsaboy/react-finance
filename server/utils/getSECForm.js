@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 dotenv.config({ path: "server/.env" });
 
 export const getSECForm = async (ticker, form, numberOfResults) => {
-  const req = "/api/getForm";
+  const req = "https://api.sec-api.io";
   const res = await fetch(req, {
     method: "POST",
     headers: {

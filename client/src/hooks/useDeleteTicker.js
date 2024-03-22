@@ -1,25 +1,22 @@
 import { useState, useContext } from "react";
 import { FinanceContext } from "../context/FinanceContext";
 
-export const useFormLookup = () => {
+export const useDeleteTicker = () => {
   const [sendSuccess, setSendSuccess] = useState(null);
   const [sendError, setSendError] = useState(null);
   const [sendLoading, setSendLoading] = useState(false);
 
-  const { setSECData } = useContext(FinanceContext);
+  const { setWatchlist } = useContext(FinanceContext);
 
-  const formLookup = async (ticker, form, numberOfResults) => {
+  const deleteTicker = async (id) => {
     setSendLoading(true);
     setSendSuccess(null);
     setSendError(null);
 
-    const req = "/api/getForm";
+    const req = `/api/watchlist/${id}`;
     const res = await fetch(req, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ticker, form, numberOfResults}),
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
     });
     const data = await res.json();
 
@@ -29,14 +26,13 @@ export const useFormLookup = () => {
       setSendError(data.error);
     } else {
       setSendLoading(false);
-      setSendSuccess("Message sent successfully");
+      setSendSuccess("Ticker removed from watchlist");
       setSendError(null);
-      setSECData(data);
     }
   };
 
   return {
-    formLookup,
+    deleteTicker,
     sendSuccess,
     setSendSuccess,
     sendError,

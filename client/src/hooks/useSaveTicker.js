@@ -1,26 +1,24 @@
 import { useState, useContext } from "react";
 import { FinanceContext } from "../context/FinanceContext";
 
-export const useFormLookup = () => {
+export const useSaveTicker = () => {
   const [sendSuccess, setSendSuccess] = useState(null);
   const [sendError, setSendError] = useState(null);
   const [sendLoading, setSendLoading] = useState(false);
 
-  const { setSECData } = useContext(FinanceContext);
+  const { setWatchlist } = useContext(FinanceContext);
 
-  const formLookup = async (ticker, form, numberOfResults) => {
+  const saveTicker = async (ticker) => {
     setSendLoading(true);
     setSendSuccess(null);
     setSendError(null);
 
-    const req = "/api/getForm";
+    const req = "/api/watchlist";
     const res = await fetch(req, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ticker, form, numberOfResults}),
-    });
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ticker }),
+      });
     const data = await res.json();
 
     if (!res.ok) {
@@ -29,14 +27,14 @@ export const useFormLookup = () => {
       setSendError(data.error);
     } else {
       setSendLoading(false);
-      setSendSuccess("Message sent successfully");
+      setSendSuccess("Ticker added to watchlist");
       setSendError(null);
-      setSECData(data);
+      setWatchlist(data);
     }
   };
 
   return {
-    formLookup,
+    saveTicker,
     sendSuccess,
     setSendSuccess,
     sendError,

@@ -1,25 +1,25 @@
 import { useState, useContext } from "react";
 import { FinanceContext } from "../context/FinanceContext";
 
-export const useFormLookup = () => {
+export const useTickerLookup = () => {
   const [sendSuccess, setSendSuccess] = useState(null);
   const [sendError, setSendError] = useState(null);
   const [sendLoading, setSendLoading] = useState(false);
 
-  const { setSECData } = useContext(FinanceContext);
+  const { setActiveTicker } = useContext(FinanceContext);
 
-  const formLookup = async (ticker, form, numberOfResults) => {
+  const tickerLookup = async (ticker) => {
     setSendLoading(true);
     setSendSuccess(null);
     setSendError(null);
 
-    const req = "/api/getForm";
+    const req = "/api/getData";
     const res = await fetch(req, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ticker, form, numberOfResults}),
+      body: JSON.stringify({ ticker }),
     });
     const data = await res.json();
 
@@ -31,12 +31,12 @@ export const useFormLookup = () => {
       setSendLoading(false);
       setSendSuccess("Message sent successfully");
       setSendError(null);
-      setSECData(data);
+      setActiveTicker(data[0]);
     }
   };
 
   return {
-    formLookup,
+    tickerLookup,
     sendSuccess,
     setSendSuccess,
     sendError,

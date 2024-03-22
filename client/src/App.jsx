@@ -37,6 +37,8 @@ function App() {
   const [optionStrategy, setOptionStrategy] = useState("None");
   const [SECForm, setSECForm] = useState("None");
   const [SECData, setSECData] = useState([]);
+  const [activeTicker, setActiveTicker] = useState("None");
+  const [watchlist, setWatchlist] = useState([]);
 
   return (
     <FinanceContext.Provider
@@ -49,6 +51,10 @@ function App() {
         setSECForm,
         SECData,
         setSECData,
+        activeTicker,
+        setActiveTicker,
+        watchlist,
+        setWatchlist,
       }}
     >
       <RouterProvider router={router} />
