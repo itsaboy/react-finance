@@ -44,7 +44,7 @@ export default function SECSearch({ openSearch, setOpenSearch }) {
                     <div className="bg-green-800 px-4 py-6 sm:px-6 border-b-2 border-green-400">
                       <div className="flex items-center justify-between">
                         <Dialog.Title className="text-base font-semibold leading-6 text-gray-200">
-                          {SECForm}
+                          Form {SECForm}
                         </Dialog.Title>
                         <div className="ml-3 flex h-7 items-center">
                           <button

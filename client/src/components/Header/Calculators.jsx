@@ -2,7 +2,7 @@ import { Fragment, useContext } from "react";
 import { Link } from "react-router-dom";
 import { Popover, Transition } from "@headlessui/react";
 import { ChevronDownIcon, CalculatorIcon } from "@heroicons/react/20/solid";
-import { BREAKEVEN_CALCS } from "../../data";
+import { BREAKEVEN_CALCS } from "../../data/BREAKEVEN_CALCS";
 import { FinanceContext } from "../../context/FinanceContext";
 
 export default function Calculators() {

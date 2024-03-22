@@ -12,6 +12,7 @@ import SECFilings from "./pages/SECFilings";
 import Disclaimer from "./pages/Disclaimer";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import Error from "./pages/Error";
 import { FinanceContext } from "./context/FinanceContext";
 import "./App.css";
 
@@ -24,7 +25,7 @@ const router = createBrowserRouter(
       <Route index path="/disclaimer" element={<Disclaimer />} />,
       <Route index path="/login" element={<Login />} />,
       <Route index path="/signup" element={<Signup />} />,
-      {/* <Route index path="*" element={<Error />} />, */}
+      <Route index path="*" element={<Error />} />,
     </Route>
   )
 );

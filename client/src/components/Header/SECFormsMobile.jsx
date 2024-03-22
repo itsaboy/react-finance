@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Disclosure } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { FinanceContext } from "../../context/FinanceContext";
-import { SEC_FORMS } from "../../data";
+import { SEC_FORMS } from "../../data/SEC_FORMs";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -39,7 +39,7 @@ export default function SECFormsMobile({ setMobileMenuOpen }) {
                   as="div"
                   className="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-100 hover:animate-pulse"
                 >
-                  {item.name}
+                  Form {item.name}
                 </Disclosure.Button>
               </Link>
             ))}

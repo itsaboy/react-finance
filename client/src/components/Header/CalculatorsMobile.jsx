@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Disclosure } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { FinanceContext } from "../../context/FinanceContext";
-import { BREAKEVEN_CALCS } from "../../data";
+import { BREAKEVEN_CALCS } from "../../data/BREAKEVEN_CALCS";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");

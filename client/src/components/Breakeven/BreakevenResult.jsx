@@ -1,7 +1,7 @@
 import { Fragment, useContext } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { CalculatorIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { FinanceContext } from "../context/FinanceContext";
+import { FinanceContext } from "../../context/FinanceContext";
 
 export default function BreakevenResult({
   ticker,

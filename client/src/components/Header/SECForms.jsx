@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Popover, Transition } from "@headlessui/react";
 import { ChevronDownIcon, DocumentIcon } from "@heroicons/react/20/solid";
 import { FinanceContext } from "../../context/FinanceContext";
-import { SEC_FORMS } from "../../data";
+import { SEC_FORMS } from "../../data/SEC_FORMs";
 
 export default function SECForms() {
   const { activePage, SECForm, setSECForm } = useContext(FinanceContext);
@@ -51,7 +51,7 @@ export default function SECForms() {
                     onClick={() => setSECForm(item.name)}
                     className="block font-semibold text-gray-900"
                   >
-                    {item.name}
+                    Form {item.name}
                     <span className="absolute inset-0" />
                   </Link>
                   <p className="mt-1 text-gray-600">{item.description}</p>
