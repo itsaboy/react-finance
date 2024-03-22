@@ -4,3 +4,10 @@
   justify-content: space-between;
   min-height: 100vh;
 }
+
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  min-height: 85vh;
+}

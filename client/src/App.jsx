@@ -10,6 +10,7 @@ import Home from "./pages/Home";
 import Breakeven from "./pages/Breakeven";
 import SECFilings from "./pages/SECFilings";
 import Disclaimer from "./pages/Disclaimer";
+import Profile from "./pages/Profile";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Error from "./pages/Error";
@@ -23,6 +24,7 @@ const router = createBrowserRouter(
       <Route index path="/breakeven" element={<Breakeven />} />,
       <Route index path="/sec-filings" element={<SECFilings />} />,
       <Route index path="/disclaimer" element={<Disclaimer />} />,
+      <Route index path="/profile" element={<Profile />} />,
       <Route index path="/login" element={<Login />} />,
       <Route index path="/signup" element={<Signup />} />,
       <Route index path="*" element={<Error />} />,
@@ -37,22 +39,20 @@ function App() {
   const [SECData, setSECData] = useState([]);
 
   return (
-    <div className="body-container">
-      <FinanceContext.Provider
-        value={{
-          activePage,
-          setActivePage,
-          optionStrategy,
-          setOptionStrategy,
-          SECForm,
-          setSECForm,
-          SECData,
-          setSECData,
-        }}
-      >
-        <RouterProvider router={router} />
-      </FinanceContext.Provider>
-    </div>
+    <FinanceContext.Provider
+      value={{
+        activePage,
+        setActivePage,
+        optionStrategy,
+        setOptionStrategy,
+        SECForm,
+        setSECForm,
+        SECData,
+        setSECData,
+      }}
+    >
+      <RouterProvider router={router} />
+    </FinanceContext.Provider>
   );
 }
 

@@ -1,12 +1,22 @@
+import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { Dialog } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-
+import {
+  HomeIcon,
+  UserIcon,
+  ExclamationTriangleIcon,
+} from "@heroicons/react/20/solid";
+import { FinanceContext } from "../../context/FinanceContext";
+import { useAuthContext } from "../../hooks/useAuthContext";
 import CalculatorsMobile from "./CalculatorsMobile";
 import SECFormsMobile from "./SECFormsMobile";
 import AALogo from "../../assets/AALogo.svg";
 
 export default function MobileMenu({ mobileMenuOpen, setMobileMenuOpen }) {
+  const { activePage } = useContext(FinanceContext);
+  const { user } = useAuthContext();
+
   return (
     <Dialog
       as="div"
@@ -59,13 +69,25 @@ export default function MobileMenu({ mobileMenuOpen, setMobileMenuOpen }) {
               </Link>
             </div>
             <div className="py-6">
-              <Link
-                to="/login"
-                className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 bg-green-700 text-gray-200 shadow-md shadow-gray-800/60 hover:bg-green-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-800 hover:cursor-pointer"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Log in
-              </Link>
+            {user ? (
+            <Link
+              to="/profile"
+              className="inline-flex items-center gap-x-2 rounded-md bg-green-700 px-3.5 py-2.5 text-sm font-semibold text-gray-200 shadow-md shadow-gray-800/60 hover:bg-green-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-800"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              {user.username}{" "}
+              <UserIcon className="-mr-0.5 h-5 w-5" aria-hidden="true" />
+            </Link>
+          ) : !user & (activePage === "login") ||
+            !user & (activePage === "signup") ? null : (
+            <Link
+              to="/login"
+              className="inline-flex items-center gap-x-2 rounded-md bg-green-700 px-3.5 py-2.5 text-sm font-semibold text-gray-200 shadow-md shadow-gray-800/60 hover:bg-green-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-800"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Log in <UserIcon className="-mr-0.5 h-5 w-5" aria-hidden="true" />
+            </Link>
+          )}
             </div>
           </div>
         </div>
