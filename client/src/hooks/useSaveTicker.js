@@ -2,16 +2,16 @@ import { useState, useContext } from "react";
 import { FinanceContext } from "../context/FinanceContext";
 
 export const useSaveTicker = () => {
-  const [sendSuccess, setSendSuccess] = useState(null);
-  const [sendError, setSendError] = useState(null);
-  const [sendLoading, setSendLoading] = useState(false);
+  const [saveTickerSuccess, setSaveTickerSuccess] = useState(null);
+  const [saveTickerError, setSaveTickerError] = useState(null);
+  const [saveTickerLoading, setSaveTickerLoading] = useState(false);
 
   const { setWatchlist } = useContext(FinanceContext);
 
   const saveTicker = async (ticker) => {
-    setSendLoading(true);
-    setSendSuccess(null);
-    setSendError(null);
+    setSaveTickerLoading(true);
+    setSaveTickerSuccess(null);
+    setSaveTickerError(null);
 
     const req = "/api/watchlist";
     const res = await fetch(req, {
@@ -22,23 +22,24 @@ export const useSaveTicker = () => {
     const data = await res.json();
 
     if (!res.ok) {
-      setSendLoading(false);
-      setSendSuccess(null);
-      setSendError(data.error);
+      setSaveTickerLoading(false);
+      setSaveTickerSuccess(null);
+      setSaveTickerError(data.error);
     } else {
-      setSendLoading(false);
-      setSendSuccess("Ticker added to watchlist");
-      setSendError(null);
+      setSaveTickerLoading(false);
+      setSaveTickerSuccess("Ticker added to watchlist");
+      setSaveTickerError(null);
       setWatchlist(data);
     }
   };
 
   return {
     saveTicker,
-    sendSuccess,
-    setSendSuccess,
-    sendError,
-    setSendError,
-    sendLoading,
+    saveTickerSuccess,
+    setSaveTickerSuccess,
+    saveTickerError,
+    setSaveTickerError,
+    saveTickerLoading,
+    setSaveTickerLoading,
   };
 };

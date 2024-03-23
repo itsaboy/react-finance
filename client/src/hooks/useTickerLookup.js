@@ -2,16 +2,16 @@ import { useState, useContext } from "react";
 import { FinanceContext } from "../context/FinanceContext";
 
 export const useTickerLookup = () => {
-  const [sendSuccess, setSendSuccess] = useState(null);
-  const [sendError, setSendError] = useState(null);
-  const [sendLoading, setSendLoading] = useState(false);
+  const [tickerLookupSuccess, setTickerLookupSuccess] = useState(null);
+  const [tickerLookupError, setTickerLookupError] = useState(null);
+  const [tickerLookupLoading, setTickerLookupLoading] = useState(false);
 
   const { setActiveTicker } = useContext(FinanceContext);
 
   const tickerLookup = async (ticker) => {
-    setSendLoading(true);
-    setSendSuccess(null);
-    setSendError(null);
+    setTickerLookupLoading(true);
+    setTickerLookupSuccess(null);
+    setTickerLookupError(null);
 
     const req = "/api/getData";
     const res = await fetch(req, {
@@ -24,23 +24,24 @@ export const useTickerLookup = () => {
     const data = await res.json();
 
     if (!res.ok) {
-      setSendLoading(false);
-      setSendSuccess(null);
-      setSendError(data.error);
+      setTickerLookupLoading(false);
+      setTickerLookupSuccess(null);
+      setTickerLookupError(data.error);
     } else {
-      setSendLoading(false);
-      setSendSuccess("Message sent successfully");
-      setSendError(null);
+      setTickerLookupLoading(false);
+      setTickerLookupSuccess("Search was successful!");
+      setTickerLookupError(null);
       setActiveTicker(data[0]);
     }
   };
 
   return {
     tickerLookup,
-    sendSuccess,
-    setSendSuccess,
-    sendError,
-    setSendError,
-    sendLoading,
+    tickerLookupSuccess,
+    setTickerLookupSuccess,
+    tickerLookupError,
+    setTickerLookupError,
+    tickerLookupLoading,
+    setTickerLookupLoading,
   };
 };

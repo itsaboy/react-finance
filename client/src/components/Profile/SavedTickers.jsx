@@ -1,21 +1,32 @@
 import { useContext, useEffect } from "react";
 import { FinanceContext } from "../../context/FinanceContext";
 import { FolderOpenIcon, FolderMinusIcon } from "@heroicons/react/20/solid";
+import Notification from "../Notification";
 import { useTickerLookup } from "../../hooks/useTickerLookup";
 import { useDeleteTicker } from "../../hooks/useDeleteTicker";
+import spinner2 from "../../assets/spinner2.svg";
 
-export default function SavedTickers({ loadTicker, setLoadTicker, tickerID, setTickerID }) {
+export default function SavedTickers({
+  loadTicker,
+  setLoadTicker,
+  tickerID,
+  setTickerID,
+}) {
   const { watchlist, setWatchlist } = useContext(FinanceContext);
+
   const {
     tickerLookup,
-    sendSuccess,
-    setSendSuccess,
-    sendError,
-    setSendError,
-    sendLoading,
+    tickerLookupSuccess,
+    tickerLookupError,
+    tickerLookupLoading,
   } = useTickerLookup();
 
-  const { deleteTicker } = useDeleteTicker();
+  const {
+    deleteTicker,
+    deleteSuccess,
+    deleteError,
+    deleteLoading,
+  } = useDeleteTicker();
 
   useEffect(() => {
     const getWatchlist = async () => {
@@ -43,8 +54,9 @@ export default function SavedTickers({ loadTicker, setLoadTicker, tickerID, setT
     setTickerID(id);
   };
 
-  const handleSubmit = async (ticker) => {
-    await tickerLookup(ticker);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await tickerLookup(loadTicker);
   };
 
   const handleDelete = async (id) => {
@@ -72,7 +84,7 @@ export default function SavedTickers({ loadTicker, setLoadTicker, tickerID, setT
       <h2 className="px-4 py-5 sm:px-6">Saved tickers</h2>
       {watchlist.length > 0 ? (
         <div className="px-4 py-5 sm:p-6 bg-gray-200">
-          <div className="grid grid-cols-1 grid-rows-3">
+          <form className="grid grid-cols-1 grid-rows-3" onSubmit={handleSubmit}>
             <label
               htmlFor="ticker"
               className="hidden text-sm font-medium leading-6 text-gray-900"
@@ -100,15 +112,19 @@ export default function SavedTickers({ loadTicker, setLoadTicker, tickerID, setT
             <br />
             <div className="flex flex-row justify-between">
               <button
-                type="button"
+                type="submit"
                 className="inline-flex items-center gap-x-2 rounded-lg bg-green-700 px-3.5 py-2.5 text-sm font-semibold text-gray-200 shadow-md shadow-gray-800/60 hover:bg-green-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-800 hover:cursor-pointer place-self-start"
-                onClick={() => handleSubmit(loadTicker)}
               >
                 Load
-                <FolderOpenIcon
-                  className="-mr-0.5 h-5 w-5"
-                  aria-hidden="true"
-                />
+                {tickerLookupLoading ? (
+                  <img
+                    src={spinner2}
+                    className="-mr-0.5 h-5 w-5"
+                    aria-hidden="true"
+                  />
+                ) : (
+                  <FolderOpenIcon className="h-5 w-5" aria-hidden="true" />
+                )}
               </button>
               <button
                 type="button"
@@ -116,18 +132,39 @@ export default function SavedTickers({ loadTicker, setLoadTicker, tickerID, setT
                 onClick={() => handleDelete(tickerID)}
               >
                 Delete
-                <FolderMinusIcon
-                  className="-mr-0.5 h-5 w-5"
-                  aria-hidden="true"
-                />
+                {deleteLoading ? (
+                  <img
+                    src={spinner2}
+                    className="-mr-0.5 h-5 w-5"
+                    aria-hidden="true"
+                  />
+                ) : (
+                  <FolderMinusIcon className="h-5 w-5" aria-hidden="true" />
+                )}
               </button>
             </div>
-          </div>
+          </form>
         </div>
       ) : (
-        <div className="grid grid-cols-1 grid-rows-1 place-items-center h-2/3">
-          <h3>No saved tickers</h3>
+        <div className="px-4 py-5 sm:p-6 bg-gray-200">
+          <div className="grid grid-cols-1 grid-rows-5 place-items-center">
+            <h4 className="w-full h-full flex justify-center items-center m-0">
+              No saved tickers
+            </h4>
+          </div>
         </div>
+      )}
+      {tickerLookupSuccess && (
+        <Notification text={tickerLookupSuccess} color={"green"} />
+      )}
+      {tickerLookupError && (
+        <Notification text={tickerLookupError} color={"red"} />
+      )}
+      {deleteSuccess && (
+        <Notification text={deleteSuccess} color={"green"} />
+      )}
+      {deleteError && (
+        <Notification text={deleteError} color={"red"} />
       )}
     </div>
   );

@@ -2,13 +2,18 @@ import { useContext } from "react";
 import { FinanceContext } from "../../context/FinanceContext";
 import { DocumentArrowDownIcon } from "@heroicons/react/20/solid";
 import { useSaveTicker } from "../../hooks/useSaveTicker";
+import Notification from "../Notification";
+import spinner2 from "../../assets/spinner2.svg";
 
-export default function SearchResult({
-  setLoadTicker,
-  setTickerID,
-}) {
+export default function SearchResult({ setLoadTicker, setTickerID }) {
   const { activeTicker, setWatchlist } = useContext(FinanceContext);
-  const { saveTicker } = useSaveTicker();
+
+  const {
+    saveTicker,
+    saveTickerSuccess,
+    saveTickerError,
+    saveTickerLoading,
+  } = useSaveTicker();
 
   const handleSave = async (ticker) => {
     await saveTicker(ticker);
@@ -40,10 +45,15 @@ export default function SearchResult({
             onClick={() => handleSave(activeTicker.symbol)}
           >
             Save
-            <DocumentArrowDownIcon
-              className="-mr-0.5 h-5 w-5"
-              aria-hidden="true"
-            />
+            {saveTickerLoading ? (
+              <img
+                src={spinner2}
+                className="-mr-0.5 h-5 w-5"
+                aria-hidden="true"
+              />
+            ) : (
+              <DocumentArrowDownIcon className="h-5 w-5" aria-hidden="true" />
+            )}
           </button>
         </div>
       </div>
@@ -53,6 +63,12 @@ export default function SearchResult({
         <p>{activeTicker.price}</p>
         <p>{activeTicker.volume}</p>
       </div>
+      {saveTickerSuccess && (
+        <Notification text={saveTickerSuccess} color={"green"} />
+      )}
+      {saveTickerError && (
+        <Notification text={saveTickerError} color={"red"} />
+      )}
     </div>
   );
 }

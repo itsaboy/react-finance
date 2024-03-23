@@ -1,17 +1,14 @@
-import { useState, useContext } from "react";
-import { FinanceContext } from "../context/FinanceContext";
+import { useState } from "react";
 
 export const useDeleteTicker = () => {
-  const [sendSuccess, setSendSuccess] = useState(null);
-  const [sendError, setSendError] = useState(null);
-  const [sendLoading, setSendLoading] = useState(false);
-
-  const { setWatchlist } = useContext(FinanceContext);
+  const [deleteSuccess, setDeleteSuccess] = useState(null);
+  const [deleteError, setDeleteError] = useState(null);
+  const [deleteLoading, setDeleteLoading] = useState(false);
 
   const deleteTicker = async (id) => {
-    setSendLoading(true);
-    setSendSuccess(null);
-    setSendError(null);
+    setDeleteLoading(true);
+    setDeleteSuccess(null);
+    setDeleteError(null);
 
     const req = `/api/watchlist/${id}`;
     const res = await fetch(req, {
@@ -21,22 +18,23 @@ export const useDeleteTicker = () => {
     const data = await res.json();
 
     if (!res.ok) {
-      setSendLoading(false);
-      setSendSuccess(null);
-      setSendError(data.error);
+      setDeleteLoading(false);
+      setDeleteSuccess(null);
+      setDeleteError(data.error);
     } else {
-      setSendLoading(false);
-      setSendSuccess("Ticker removed from watchlist");
-      setSendError(null);
+      setDeleteLoading(false);
+      setDeleteSuccess("Ticker removed");
+      setDeleteError(null);
     }
   };
 
   return {
     deleteTicker,
-    sendSuccess,
-    setSendSuccess,
-    sendError,
-    setSendError,
-    sendLoading,
+    deleteSuccess,
+    setDeleteSuccess,
+    deleteError,
+    setDeleteError,
+    deleteLoading,
+    setDeleteLoading,
   };
 };

@@ -2,16 +2,16 @@ import { useState, useContext } from "react";
 import { FinanceContext } from "../context/FinanceContext";
 
 export const useFormLookup = () => {
-  const [sendSuccess, setSendSuccess] = useState(null);
-  const [sendError, setSendError] = useState(null);
-  const [sendLoading, setSendLoading] = useState(false);
+  const [formLookupSuccess, setFormLookupSuccess] = useState(null);
+  const [formLookupError, setFormLookupError] = useState(null);
+  const [formLookupLoading, setFormLookupLoading] = useState(false);
 
   const { setSECData } = useContext(FinanceContext);
 
   const formLookup = async (ticker, form, numberOfResults) => {
-    setSendLoading(true);
-    setSendSuccess(null);
-    setSendError(null);
+    setFormLookupLoading(true);
+    setFormLookupSuccess(null);
+    setFormLookupError(null);
 
     const req = "/api/getForm";
     const res = await fetch(req, {
@@ -24,23 +24,24 @@ export const useFormLookup = () => {
     const data = await res.json();
 
     if (!res.ok) {
-      setSendLoading(false);
-      setSendSuccess(null);
-      setSendError(data.error);
+      setFormLookupLoading(false);
+      setFormLookupSuccess(null);
+      setFormLookupError(data.error);
     } else {
-      setSendLoading(false);
-      setSendSuccess("Message sent successfully");
-      setSendError(null);
+      setFormLookupLoading(false);
+      setFormLookupSuccess("Message sent successfully");
+      setFormLookupError(null);
       setSECData(data);
     }
   };
 
   return {
     formLookup,
-    sendSuccess,
-    setSendSuccess,
-    sendError,
-    setSendError,
-    sendLoading,
+    formLookupSuccess,
+    setFormLookupSuccess,
+    formLookupError,
+    setFormLookupError,
+    formLookupLoading,
+    setFormLookupLoading
   };
 };

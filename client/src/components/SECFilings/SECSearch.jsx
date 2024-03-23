@@ -11,11 +11,12 @@ export default function SECSearch({ openSearch, setOpenSearch }) {
 
   const {
     formLookup,
-    sendSuccess,
-    setSendSuccess,
-    sendError,
-    setSendError,
-    sendLoading,
+    formLookupSuccess,
+    setFormLookupSuccess,
+    formLookupError,
+    setFormLookupError,
+    formLookupLoading,
+    setFormLookupLoading
   } = useFormLookup();
 
   const handleSubmit = async (ticker, SECForm, numberOfResults) => {
