@@ -34,7 +34,7 @@ export const useFormLookup = () => {
         setFormLookupError("No results found!");
       } else {
         setFormLookupLoading(false);
-        setFormLookupSuccess("Form lookup successful!");
+        setFormLookupSuccess("Results found!");
         setFormLookupError(null);
         setSECData(data);
       }

@@ -12,7 +12,7 @@ export default function MyAccount() {
     <div className="divide-y divide-gray-800">
       <div className="pb-6 grid">
         <div className="h-24 bg-gradient-to-r from-green-600 to-green-400/40 sm:h-20 lg:h-28" />
-        <div className="-mt-12 px-4 sm:-mt-8 sm:flex sm:items-end sm:px-6 lg:-mt-16 max-w-3xl mx-auto">
+        <div className="-mt-12 px-4 sm:-mt-8 flex flex-col items-center sm:px-6 lg:-mt-16 max-w-3xl mx-auto">
           <div>
             <div className="-m-1 flex">
               <div className="inline-flex overflow-hidden rounded-lg border-4 border-gray-800 bg-gray-600/80 shadow-md shadow-gray-800/60">
@@ -24,7 +24,7 @@ export default function MyAccount() {
               </div>
             </div>
           </div>
-          <div className="mt-6 sm:ml-6 sm:flex-1">
+          <div className="mt-6">
             <div>
               <div className="flex items-center">
                 <h3 className="text-xl font-bold text-gray-900 sm:text-2xl">
@@ -36,7 +36,7 @@ export default function MyAccount() {
               </div>
               <p className="text-sm text-gray-500">{user ? user.email : null}</p>
             </div>
-            <div className="mt-5 flex flex-wrap flex-col sm:flex-row space-y-3 sm:space-x-3 sm:space-y-0">
+            <div className="mt-5 flex flex-col">
               <button
                 type="button"
                 className="inline-flex items-center justify-center gap-x-2 rounded-md bg-green-700 px-3.5 py-2.5 text-sm font-semibold text-gray-200 shadow-md shadow-gray-800/60 hover:bg-green-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-800"

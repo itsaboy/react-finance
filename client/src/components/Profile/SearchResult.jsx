@@ -12,39 +12,49 @@ dayjs.extend(utc);
 dayjs.extend(timezone);
 
 export default function SearchResult({ setLoadTicker, setTickerID }) {
-  const { activeTicker, setWatchlist } = useContext(FinanceContext);
+  const { activeTicker, watchlist, setWatchlist } = useContext(FinanceContext);
   const { user } = useAuthContext();
 
-  const { saveTicker, saveTickerSuccess, saveTickerError, saveTickerLoading } =
-    useSaveTicker();
+  const {
+    saveTicker,
+    saveTickerSuccess,
+    saveTickerError,
+    setSaveTickerError,
+    saveTickerLoading,
+  } = useSaveTicker();
 
   const handleSave = async (ticker) => {
-    await saveTicker(ticker);
-    const getWatchlist = async () => {
-      const req = "/api/watchlist";
-      const res = await fetch(req, {
-        headers: { Authorization: `Bearer ${user.token}` },
-      });
-      const data = await res.json();
+    if (watchlist.includes(ticker)) {
+      setSaveTickerError("This ticker is already in your watchlist");
+      return;
+    } else {
+      await saveTicker(ticker);
+      const getWatchlist = async () => {
+        const req = "/api/watchlist";
+        const res = await fetch(req, {
+          headers: { Authorization: `Bearer ${user.token}` },
+        });
+        const data = await res.json();
 
-      if (!res.ok) {
-        console.log(data.error);
-      } else {
-        setWatchlist(data);
-        if (data.length > 0) {
-          setLoadTicker(data[0].ticker);
-          setTickerID(data[0]._id);
+        if (!res.ok) {
+          console.log(data.error);
+        } else {
+          setWatchlist(data);
+          if (data.length > 0) {
+            setLoadTicker(data[0].ticker);
+            setTickerID(data[0]._id);
+          }
         }
+      };
+      if (user) {
+        getWatchlist();
       }
-    };
-    if (user) {
-      getWatchlist();
     }
   };
 
   return (
     <div className="lg:col-span-2 row-span-4 sm:row-span-2 divide-y divide-gray-200 overflow-hidden rounded-lg bg-gray-200 shadow-lg shadow-gray-800/40">
-      <div className="px-4 py-5 sm:px-6 bg-gray-100">
+      <div className="px-4 py-5 sm:px-6 bg-gray-100 border-b-2 border-gray-300">
         <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
           <h3 className="font-bold text-gray-900">{activeTicker.name}</h3>
           <h4>
@@ -88,22 +98,6 @@ export default function SearchResult({ setLoadTicker, setTickerID }) {
           <p>{activeTicker.volume}</p>
         </div>
         <div>
-          <h3 className="font-semibold text-green-800">LoD</h3>
-          <p>{activeTicker.dayLow}</p>
-        </div>
-        <div>
-          <h3 className="font-semibold text-green-800">HoD</h3>
-          <p>{activeTicker.dayHigh}</p>
-        </div>
-        <div>
-          <h3 className="font-semibold text-green-800">LoY</h3>
-          <p>{activeTicker.yearLow}</p>
-        </div>
-        <div>
-          <h3 className="font-semibold text-green-800">HoY</h3>
-          <p>{activeTicker.yearHigh}</p>
-        </div>
-        <div>
           <h3 className="font-semibold text-green-800">Open</h3>
           <p>{activeTicker.open}</p>
         </div>
@@ -112,12 +106,28 @@ export default function SearchResult({ setLoadTicker, setTickerID }) {
           <p>{activeTicker.previousClose}</p>
         </div>
         <div>
-          <h3 className="font-semibold text-green-800">50sma</h3>
+          <h3 className="font-semibold text-green-800">LOD</h3>
+          <p>{activeTicker.dayLow}</p>
+        </div>
+        <div>
+          <h3 className="font-semibold text-green-800">HOD</h3>
+          <p>{activeTicker.dayHigh}</p>
+        </div>
+        <div>
+          <h3 className="font-semibold text-green-800">50DMA</h3>
           <p>{activeTicker.priceAvg50}</p>
         </div>
         <div>
-          <h3 className="font-semibold text-green-800">200sma</h3>
+          <h3 className="font-semibold text-green-800">200DMA</h3>
           <p>{activeTicker.priceAvg200}</p>
+        </div>
+        <div>
+          <h3 className="font-semibold text-green-800">LOY</h3>
+          <p>{activeTicker.yearLow}</p>
+        </div>
+        <div>
+          <h3 className="font-semibold text-green-800">HOY</h3>
+          <p>{activeTicker.yearHigh}</p>
         </div>
       </div>
       {saveTickerSuccess && (

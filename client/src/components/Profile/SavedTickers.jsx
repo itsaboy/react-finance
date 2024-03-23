@@ -88,7 +88,7 @@ export default function SavedTickers({
 
   return (
     <div className="divide-y divide-gray-200 overflow-hidden rounded-lg bg-gray-200 shadow-lg shadow-gray-800/40 grid-rows-1">
-      <h2 className="px-4 py-5 sm:px-6 bg-gray-100">Saved tickers</h2>
+      <h2 className="px-4 py-5 sm:px-6 bg-gray-100 border-b-2 border-gray-300">Saved tickers</h2>
       {watchlist.length > 0 ? (
         <div className="px-4 py-5 sm:p-6">
           <form
@@ -104,7 +104,7 @@ export default function SavedTickers({
             <select
               id={tickerID}
               name="location"
-              className="px-2 block w-full rounded-md border-0 py-2.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              className="px-2 block w-full rounded-md border-0 py-2.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
               onChange={handleChange}
               value={loadTicker}
             >

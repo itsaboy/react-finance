@@ -21,7 +21,7 @@ export default function TickerSearch() {
 
   return (
     <div className="divide-y divide-gray-200 overflow-hidden rounded-lg bg-gray-200 shadow-lg shadow-gray-800/40 grid-rows-1">
-      <h2 className="px-4 py-5 sm:px-6 bg-gray-100">Ticker search</h2>
+      <h2 className="px-4 py-5 sm:px-6 bg-gray-100 border-b-2 border-gray-300">Ticker search</h2>
       <div className="px-4 py-5 sm:p-6">
         <form className="grid grid-cols-1 grid-rows-3" onSubmit={handleSubmit}>
           <label
@@ -34,7 +34,7 @@ export default function TickerSearch() {
             type="text"
             name="ticker"
             id="ticker"
-            className="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            className="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
             onChange={(e) => setNewTicker(e.target.value)}
             value={newTicker}
             placeholder="stock, etf, crypto"

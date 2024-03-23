@@ -1,12 +1,8 @@
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { Dialog } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import {
-  HomeIcon,
-  UserIcon,
-  ExclamationTriangleIcon,
-} from "@heroicons/react/20/solid";
+import { UserIcon } from "@heroicons/react/20/solid";
 import { FinanceContext } from "../../context/FinanceContext";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import CalculatorsMobile from "./CalculatorsMobile";
@@ -29,11 +25,7 @@ export default function MobileMenu({ mobileMenuOpen, setMobileMenuOpen }) {
         <div className="flex items-center justify-between">
           <div href="#" className="-m-1.5 p-1.5">
             <span className="sr-only">Your Company</span>
-            <img
-              className="h-10 w-auto"
-              src={AALogo}
-              alt=""
-            />
+            <img className="h-10 w-auto" src={AALogo} alt="" />
           </div>
           <button
             type="button"
@@ -54,12 +46,8 @@ export default function MobileMenu({ mobileMenuOpen, setMobileMenuOpen }) {
               >
                 Home
               </Link>
-              <CalculatorsMobile
-                setMobileMenuOpen={setMobileMenuOpen}
-              />
-              <SECFormsMobile
-                setMobileMenuOpen={setMobileMenuOpen}
-              />
+              <CalculatorsMobile setMobileMenuOpen={setMobileMenuOpen} />
+              <SECFormsMobile setMobileMenuOpen={setMobileMenuOpen} />
               <Link
                 to="/disclaimer"
                 className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-red-800 hover:bg-gray-50 hover:animate-pulse"
@@ -69,25 +57,26 @@ export default function MobileMenu({ mobileMenuOpen, setMobileMenuOpen }) {
               </Link>
             </div>
             <div className="py-6">
-            {user ? (
-            <Link
-              to="/profile"
-              className="inline-flex items-center gap-x-2 rounded-md bg-green-700 px-3.5 py-2.5 text-sm font-semibold text-gray-200 shadow-md shadow-gray-800/60 hover:bg-green-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-800"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              {user.username}{" "}
-              <UserIcon className="-mr-0.5 h-5 w-5" aria-hidden="true" />
-            </Link>
-          ) : !user & (activePage === "login") ||
-            !user & (activePage === "signup") ? null : (
-            <Link
-              to="/login"
-              className="inline-flex items-center gap-x-2 rounded-md bg-green-700 px-3.5 py-2.5 text-sm font-semibold text-gray-200 shadow-md shadow-gray-800/60 hover:bg-green-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-800"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Log in <UserIcon className="-mr-0.5 h-5 w-5" aria-hidden="true" />
-            </Link>
-          )}
+              {user ? (
+                <Link
+                  to="/profile"
+                  className="inline-flex items-center gap-x-2 rounded-md bg-green-700 px-3.5 py-2.5 text-sm font-semibold text-gray-200 shadow-md shadow-gray-800/60 hover:bg-green-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-800"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {user.username}{" "}
+                  <UserIcon className="-mr-0.5 h-5 w-5" aria-hidden="true" />
+                </Link>
+              ) : !user & (activePage === "login") ||
+                !user & (activePage === "signup") ? null : (
+                <Link
+                  to="/login"
+                  className="inline-flex items-center gap-x-2 rounded-md bg-green-700 px-3.5 py-2.5 text-sm font-semibold text-gray-200 shadow-md shadow-gray-800/60 hover:bg-green-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-800"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Log in{" "}
+                  <UserIcon className="-mr-0.5 h-5 w-5" aria-hidden="true" />
+                </Link>
+              )}
             </div>
           </div>
         </div>

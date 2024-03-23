@@ -13,7 +13,7 @@ export default function ProfileNav({ activeTab, setActiveTab }) {
               key={tab.name}
               className={`group relative min-w-0 flex-1 overflow-hidden py-4 px-4 text-center text-sm font-medium focus:z-10 ${
                 activeTab === tab.name
-                  ? "bg-gray-300 hover:cursor-default"
+                  ? "bg-gray-300 hover:cursor-default shadow-md shadow-gray-600/40"
                   : "bg-gray-100 hover:bg-gray-200"
               }`}
               onClick={() => setActiveTab(tab.name)}

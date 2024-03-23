@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { Popover } from "@headlessui/react";
-import { Bars3Icon } from "@heroicons/react/24/outline";
+import { BarsArrowDownIcon } from "@heroicons/react/24/outline";
 import {
   HomeIcon,
   UserIcon,
@@ -47,7 +47,7 @@ export default function Header() {
             onClick={() => setMobileMenuOpen(true)}
           >
             <span className="sr-only">Open main menu</span>
-            <Bars3Icon className="h-6 w-6" aria-hidden="true" />
+            <BarsArrowDownIcon className="h-6 w-6" aria-hidden="true" />
           </button>
         </div>
         <Popover.Group className="hidden lg:flex lg:gap-x-12">
