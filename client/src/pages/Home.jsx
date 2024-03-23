@@ -16,7 +16,7 @@ export default function Home() {
       <div className="mx-auto max-w-7xl lg:grid lg:grid-cols-12 lg:gap-x-8 lg:px-8">
         <div className="px-6 pb-24 pt-10 sm:pb-32 lg:col-span-7 lg:px-0 lg:pb-56 lg:pt-48 xl:col-span-6">
           <div className="mx-auto max-w-2xl lg:mx-0">
-            <h1 className="mt-24 text-4xl font-bold tracking-tight text-gray-900 sm:mt-10 sm:text-6xl">
+            <h1 className="mt-24 text-4xl font-bold tracking-tight text-gray-700 sm:mt-10 sm:text-6xl">
               Data to help inform your investment and trading decisions.
             </h1>
             <p className="mt-6 text-lg leading-8 text-gray-800">
