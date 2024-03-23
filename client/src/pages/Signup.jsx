@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { UserPlusIcon } from "@heroicons/react/20/solid";
 import { FinanceContext } from "../context/FinanceContext";
 import { useSignup } from "../hooks/useSignup";
+import FailureMsg from "../components/FailureMsg";
 
 export default function Signup() {
   const [username, setUsername] = useState("");
@@ -11,13 +12,13 @@ export default function Signup() {
 
   const { setActivePage, setSECForm, setOptionStrategy } = useContext(FinanceContext);
 
-  const { signup, signupError, signupLoading } = useSignup();
+  const { signup, signupError, setSignupError, signupLoading } = useSignup();
 
   useEffect(() => {
     setActivePage("signup");
     setOptionStrategy("None");
     setSECForm("None");
-  });
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -35,7 +36,7 @@ export default function Signup() {
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
           <div className="bg-gray-600 w-full px-6 py-12 shadow-lg sm:rounded-2xl sm:px-12 shadow-gray-950/60 bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-80">
-            <form className="space-y-6" onSubmit={handleSubmit}>
+            <form className="space-y-6 flex flex-col" onSubmit={handleSubmit}>
               <div>
                 <label
                   htmlFor="username"
@@ -99,27 +100,11 @@ export default function Signup() {
                 </div>
               </div>
 
-              {/* <div>
-                <label
-                  htmlFor="password"
-                  className="block text-sm font-medium leading-6 text-slate-200"
-                >
-                  Re-type Password
-                </label>
-                <div className="mt-2">
-                  <input
-                    id="retype"
-                    name="retype"
-                    type="password"
-                    autoComplete="current-password"
-                    // required
-                    disabled
-                    className="block w-full rounded-md border-0 py-1.5 text-slate-300 shadow-sm ring-1 ring-inset ring-blue-400 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
-                  />
-                </div>
-              </div> */}
-
-              <br />
+              {signupError ? (
+                <FailureMsg text={signupError} clear={setSignupError} />
+              ) : (
+                <br />
+              )}
 
               <div className="flex items-center justify-center">
                 <button
@@ -130,11 +115,6 @@ export default function Signup() {
                   Sign up{" "}
                   <UserPlusIcon className="-mr-0.5 h-5 w-5" aria-hidden="true" />
                 </button>
-                {signupError && (
-                  <p className="mt-2 text-sm text-red-400" id="email-error">
-                    {signupError}
-                  </p>
-                )}
               </div>
             </form>
           </div>

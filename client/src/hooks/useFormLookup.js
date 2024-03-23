@@ -19,7 +19,7 @@ export const useFormLookup = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ticker, form, numberOfResults}),
+      body: JSON.stringify({ ticker, form, numberOfResults }),
     });
     const data = await res.json();
 
@@ -28,10 +28,16 @@ export const useFormLookup = () => {
       setFormLookupSuccess(null);
       setFormLookupError(data.error);
     } else {
-      setFormLookupLoading(false);
-      setFormLookupSuccess("Message sent successfully");
-      setFormLookupError(null);
-      setSECData(data);
+      if (data.length === 0) {
+        setFormLookupLoading(false);
+        setFormLookupSuccess(null);
+        setFormLookupError("No results found!");
+      } else {
+        setFormLookupLoading(false);
+        setFormLookupSuccess("Form lookup successful!");
+        setFormLookupError(null);
+        setSECData(data);
+      }
     }
   };
 
@@ -42,6 +48,6 @@ export const useFormLookup = () => {
     formLookupError,
     setFormLookupError,
     formLookupLoading,
-    setFormLookupLoading
+    setFormLookupLoading,
   };
 };

@@ -3,14 +3,16 @@ import { Link } from "react-router-dom";
 import { UserIcon } from "@heroicons/react/20/solid";
 import { FinanceContext } from "../context/FinanceContext";
 import { useLogin } from "../hooks/useLogin";
+import FailureMsg from "../components/FailureMsg";
 
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const { setActivePage, setSECForm, setOptionStrategy } = useContext(FinanceContext);
+  const { setActivePage, setSECForm, setOptionStrategy } =
+    useContext(FinanceContext);
 
-  const { login, loginError, loginLoading } = useLogin();
+  const { login, loginError, setLoginError, loginLoading } = useLogin();
 
   useEffect(() => {
     setActivePage("login");
@@ -34,7 +36,7 @@ export default function Login() {
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
           <div className="bg-gray-600 w-full px-6 py-12 shadow-lg sm:rounded-2xl sm:px-12 shadow-gray-950/60 bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-80">
-            <form className="space-y-6" onSubmit={handleSubmit}>
+            <form className="space-y-6 flex flex-col" onSubmit={handleSubmit}>
               <div>
                 <label
                   htmlFor="username"
@@ -77,9 +79,13 @@ export default function Login() {
                 </div>
               </div>
 
-              <br />
+              {loginError ? (
+                <FailureMsg text={loginError} clear={setLoginError} />
+              ) : (
+                <br />
+              )}
 
-              <div className="flex items-center justify-center">
+              <div className="flex flex-col items-center justify-center">
                 <button
                   type="submit"
                   className="inline-flex items-center gap-x-2 rounded-md bg-green-700 px-3.5 py-2.5 text-sm font-semibold text-gray-200 shadow-md shadow-gray-800/60 hover:bg-green-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-800 hover:cursor-pointer"
@@ -88,11 +94,6 @@ export default function Login() {
                   Log in{" "}
                   <UserIcon className="-mr-0.5 h-5 w-5" aria-hidden="true" />
                 </button>
-                {loginError && (
-                  <p className="mt-2 text-sm text-red-400" id="email-error">
-                    {loginError}
-                  </p>
-                )}
               </div>
             </form>
           </div>

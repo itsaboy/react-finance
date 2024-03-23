@@ -4,8 +4,11 @@ import {
   addTicker,
   deleteTicker,
 } from "../controllers/watchlistController.js";
+import { authCheck } from "../middleware/authCheck.js";
 
 export const tickerRoutes = express.Router();
+
+tickerRoutes.use(authCheck);
 
 tickerRoutes.get("/", getAllTickers);
 

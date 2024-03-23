@@ -1,5 +1,6 @@
 import { useContext, useEffect } from "react";
 import { FinanceContext } from "../../context/FinanceContext";
+import { useAuthContext } from "../../hooks/useAuthContext";
 import { FolderOpenIcon, FolderMinusIcon } from "@heroicons/react/20/solid";
 import Notification from "../Notification";
 import { useTickerLookup } from "../../hooks/useTickerLookup";
@@ -13,6 +14,7 @@ export default function SavedTickers({
   setTickerID,
 }) {
   const { watchlist, setWatchlist } = useContext(FinanceContext);
+  const { user } = useAuthContext();
 
   const {
     tickerLookup,
@@ -21,17 +23,15 @@ export default function SavedTickers({
     tickerLookupLoading,
   } = useTickerLookup();
 
-  const {
-    deleteTicker,
-    deleteSuccess,
-    deleteError,
-    deleteLoading,
-  } = useDeleteTicker();
+  const { deleteTicker, deleteSuccess, deleteError, deleteLoading } =
+    useDeleteTicker();
 
   useEffect(() => {
     const getWatchlist = async () => {
       const req = "/api/watchlist";
-      const res = await fetch(req);
+      const res = await fetch(req, {
+        headers: { Authorization: `Bearer ${user.token}` },
+      });
       const data = await res.json();
 
       if (!res.ok) {
@@ -44,8 +44,11 @@ export default function SavedTickers({
         }
       }
     };
-    getWatchlist();
-  }, []);
+
+    if (user) {
+      getWatchlist();
+    }
+  }, [user]);
 
   const handleChange = (e) => {
     const ticker = e.target.value;
@@ -63,7 +66,9 @@ export default function SavedTickers({
     await deleteTicker(id);
     const getWatchlist = async () => {
       const req = "/api/watchlist";
-      const res = await fetch(req);
+      const res = await fetch(req, {
+        headers: { Authorization: `Bearer ${user.token}` },
+      });
       const data = await res.json();
 
       if (!res.ok) {
@@ -76,15 +81,20 @@ export default function SavedTickers({
         }
       }
     };
-    getWatchlist();
+    if (user) {
+      getWatchlist();
+    }
   };
 
   return (
-    <div className="divide-y divide-gray-200 overflow-hidden rounded-lg bg-gray-100 shadow">
-      <h2 className="px-4 py-5 sm:px-6">Saved tickers</h2>
+    <div className="divide-y divide-gray-200 overflow-hidden rounded-lg bg-gray-200 shadow-lg shadow-gray-800/40 grid-rows-1">
+      <h2 className="px-4 py-5 sm:px-6 bg-gray-100">Saved tickers</h2>
       {watchlist.length > 0 ? (
-        <div className="px-4 py-5 sm:p-6 bg-gray-200">
-          <form className="grid grid-cols-1 grid-rows-3" onSubmit={handleSubmit}>
+        <div className="px-4 py-5 sm:p-6">
+          <form
+            className="grid grid-cols-1 grid-rows-3"
+            onSubmit={handleSubmit}
+          >
             <label
               htmlFor="ticker"
               className="hidden text-sm font-medium leading-6 text-gray-900"
@@ -160,12 +170,8 @@ export default function SavedTickers({
       {tickerLookupError && (
         <Notification text={tickerLookupError} color={"red"} />
       )}
-      {deleteSuccess && (
-        <Notification text={deleteSuccess} color={"green"} />
-      )}
-      {deleteError && (
-        <Notification text={deleteError} color={"red"} />
-      )}
+      {deleteSuccess && <Notification text={deleteSuccess} color={"green"} />}
+      {deleteError && <Notification text={deleteError} color={"red"} />}
     </div>
   );
 }

@@ -1,9 +1,12 @@
 import { useState } from "react";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 export const useDeleteTicker = () => {
   const [deleteSuccess, setDeleteSuccess] = useState(null);
   const [deleteError, setDeleteError] = useState(null);
   const [deleteLoading, setDeleteLoading] = useState(false);
+
+  const { user } = useAuthContext();
 
   const deleteTicker = async (id) => {
     setDeleteLoading(true);
@@ -13,7 +16,10 @@ export const useDeleteTicker = () => {
     const req = `/api/watchlist/${id}`;
     const res = await fetch(req, {
       method: "DELETE",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${user.token}`,
+      },
     });
     const data = await res.json();
 

@@ -28,10 +28,16 @@ export const useTickerLookup = () => {
       setTickerLookupSuccess(null);
       setTickerLookupError(data.error);
     } else {
-      setTickerLookupLoading(false);
-      setTickerLookupSuccess("Search was successful!");
-      setTickerLookupError(null);
-      setActiveTicker(data[0]);
+      if (data.length === 0) {
+        setTickerLookupLoading(false);
+        setTickerLookupSuccess(null);
+        setTickerLookupError("No results found!");
+      } else {
+        setTickerLookupLoading(false);
+        setTickerLookupSuccess("Search was successful!");
+        setTickerLookupError(null);
+        setActiveTicker(data[0]);
+      }
     }
   };
 

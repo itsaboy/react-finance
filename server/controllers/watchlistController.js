@@ -2,7 +2,8 @@ import mongoose from "mongoose";
 import { Ticker } from "../models/watchlistModel.js";
 
 export const getAllTickers = async (req, res) => {
-  const tickers = await Ticker.find({}).sort({ createdAt: -1 });
+  const user_id = req.user._id;
+  const tickers = await Ticker.find({ user_id }).sort({ createdAt: -1 });
   try {
     res.status(200).json(tickers);
   } catch (error) {
@@ -13,10 +14,13 @@ export const getAllTickers = async (req, res) => {
 export const addTicker = async (req, res) => {
   const { ticker } = req.body;
   try {
-    const newTicker = await Ticker.addTicker(ticker);
+    const user_id = req.user._id;
+    const newTicker = await Ticker.create({ ticker, user_id });
     res.status(200).json(newTicker);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res
+      .status(400)
+      .json({ error: "Error. Is this ticker already in your watchlist?" });
   }
 };
 

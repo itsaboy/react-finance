@@ -1,6 +1,9 @@
 import { Fragment, useState, useContext } from "react";
 import { Transition } from "@headlessui/react";
-import { CheckCircleIcon } from "@heroicons/react/24/outline";
+import {
+  CheckCircleIcon,
+  ExclamationCircleIcon,
+} from "@heroicons/react/24/outline";
 import { XMarkIcon } from "@heroicons/react/20/solid";
 
 export default function Notification({ text, color }) {
@@ -13,7 +16,7 @@ export default function Notification({ text, color }) {
         aria-live="assertive"
         className="pointer-events-none fixed inset-0 flex items-end px-4 py-6 sm:items-start sm:p-6"
       >
-        <div className="flex w-full flex-col items-center space-y-4 sm:items-end">
+        <div className="flex w-full flex-col items-center space-y-4 sm:items-start">
           {/* Notification panel, dynamically insert this into the live region when it needs to be displayed */}
           <Transition
             show={show}
@@ -29,10 +32,18 @@ export default function Notification({ text, color }) {
               <div className="p-4">
                 <div className="flex items-start">
                   <div className="flex-shrink-0">
-                    <CheckCircleIcon
-                      className={`h-6 w-6 text-${color}-400`}
-                      aria-hidden="true"
-                    />
+                    {color === "green" && (
+                      <CheckCircleIcon
+                        className={`h-6 w-6 text-${color}-400`}
+                        aria-hidden="true"
+                      />
+                    )}
+                    {color === "red" && (
+                      <ExclamationCircleIcon
+                        className={`h-6 w-6 text-${color}-400`}
+                        aria-hidden="true"
+                      />
+                    )}
                   </div>
                   <div className="ml-3 w-0 flex-1 pt-0.5">
                     <p className="text-sm font-medium text-gray-900">{text}</p>

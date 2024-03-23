@@ -31,5 +31,5 @@ export const useSignup = () => {
     }
   };
 
-  return { signupError, signupLoading, signup };
+  return { signupError, setSignupError, signupLoading, signup };
 };

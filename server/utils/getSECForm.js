@@ -22,5 +22,6 @@ export const getSECForm = async (ticker, form, numberOfResults) => {
   });
   const data = await res.json();
   const formattedData = data.filings;
+  console.log(formattedData);
   return formattedData;
 };
