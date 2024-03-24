@@ -86,7 +86,10 @@ export default function Header() {
           {user ? (
             <Link
               to="/profile"
-              className="inline-flex items-center gap-x-2 rounded-md bg-green-700 px-3.5 py-2.5 text-sm font-semibold text-gray-200 shadow-md shadow-gray-800/60 hover:bg-green-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-800"
+              className={`inline-flex items-center gap-x-2 rounded-md bg-green-700 px-3.5 py-2.5 text-sm font-semibold text-gray-200 shadow-md shadow-gray-800/60 hover:bg-green-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-800 ${
+                activePage === "profile" &&
+                "bg-gradient-to-l from-green-700 to-green-600 hover:cursor-default"
+              }`}
             >
               {user.username}{" "}
               <UserIcon className="-mr-0.5 h-5 w-5" aria-hidden="true" />

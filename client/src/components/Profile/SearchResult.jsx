@@ -4,6 +4,7 @@ import { useAuthContext } from "../../hooks/useAuthContext";
 import { DocumentArrowDownIcon } from "@heroicons/react/20/solid";
 import { useSaveTicker } from "../../hooks/useSaveTicker";
 import Notification from "../Notification";
+import ResultGridItem from "./ResultGridItem";
 import spinner2 from "../../assets/spinner2.svg";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
@@ -24,7 +25,9 @@ export default function SearchResult({ setLoadTicker, setTickerID }) {
   } = useSaveTicker();
 
   const handleSave = async (ticker) => {
-    if (watchlist.includes(ticker)) {
+    console.log(watchlist);
+    console.log(ticker);
+    if (watchlist.some((obj) => obj.ticker === ticker)) {
       setSaveTickerError("This ticker is already in your watchlist");
       return;
     } else {
@@ -81,54 +84,30 @@ export default function SearchResult({ setLoadTicker, setTickerID }) {
         </div>
       </div>
       <div className="px-4 py-5 sm:p-6 grid grid-cols-1 sm:grid-cols-4 place-items-center text-center grid-rows-12 sm:grid-rows-3 gap-8">
-        <div className="flex flex-col">
-          <h3 className="font-semibold text-green-800">Price</h3>
-          <p>{activeTicker.price}</p>
-        </div>
-        <div>
-          <h3 className="font-semibold text-green-800">Change</h3>
-          <p>{activeTicker.change}</p>
-        </div>
-        <div>
-          <h3 className="font-semibold text-green-800">Change %</h3>
-          <p>{activeTicker.changesPercentage}</p>
-        </div>
-        <div>
-          <h3 className="font-semibold text-green-800">Volume</h3>
-          <p>{activeTicker.volume}</p>
-        </div>
-        <div>
-          <h3 className="font-semibold text-green-800">Open</h3>
-          <p>{activeTicker.open}</p>
-        </div>
-        <div>
-          <h3 className="font-semibold text-green-800">Prev Close</h3>
-          <p>{activeTicker.previousClose}</p>
-        </div>
-        <div>
-          <h3 className="font-semibold text-green-800">LOD</h3>
-          <p>{activeTicker.dayLow}</p>
-        </div>
-        <div>
-          <h3 className="font-semibold text-green-800">HOD</h3>
-          <p>{activeTicker.dayHigh}</p>
-        </div>
-        <div>
-          <h3 className="font-semibold text-green-800">50DMA</h3>
-          <p>{activeTicker.priceAvg50}</p>
-        </div>
-        <div>
-          <h3 className="font-semibold text-green-800">200DMA</h3>
-          <p>{activeTicker.priceAvg200}</p>
-        </div>
-        <div>
-          <h3 className="font-semibold text-green-800">LOY</h3>
-          <p>{activeTicker.yearLow}</p>
-        </div>
-        <div>
-          <h3 className="font-semibold text-green-800">HOY</h3>
-          <p>{activeTicker.yearHigh}</p>
-        </div>
+        <ResultGridItem title={"Price"} data={activeTicker.price} />
+        <ResultGridItem title={"Change"} data={activeTicker.change} />
+        <ResultGridItem
+          title={"% Change"}
+          data={activeTicker.changesPercentage.toFixed(2)}
+        />
+        <ResultGridItem title={"Volume"} data={activeTicker.volume} />
+        <ResultGridItem title={"Open"} data={activeTicker.open} />
+        <ResultGridItem
+          title={"Prev Close"}
+          data={activeTicker.previousClose}
+        />
+        <ResultGridItem title={"LOD"} data={activeTicker.dayLow} />
+        <ResultGridItem title={"HOD"} data={activeTicker.dayHigh} />
+        <ResultGridItem
+          title={"50DMA"}
+          data={activeTicker.priceAvg50.toFixed(2)}
+        />
+        <ResultGridItem
+          title={"200DMA"}
+          data={activeTicker.priceAvg200.toFixed(2)}
+        />
+        <ResultGridItem title={"LOY"} data={activeTicker.yearLow} />
+        <ResultGridItem title={"HOY"} data={activeTicker.yearHigh} />
       </div>
       {saveTickerSuccess && (
         <Notification text={saveTickerSuccess} color={"green"} />

@@ -21,7 +21,9 @@ export default function TickerSearch() {
 
   return (
     <div className="divide-y divide-gray-200 overflow-hidden rounded-lg bg-gray-200 shadow-lg shadow-gray-800/40 grid-rows-1">
-      <h2 className="px-4 py-5 sm:px-6 bg-gray-100 border-b-2 border-gray-300">Ticker search</h2>
+      <h2 className="px-4 py-5 sm:px-6 bg-gray-100 text-sm font-semibold text-gray-800 border-b-2 border-gray-300">
+        Ticker search
+      </h2>
       <div className="px-4 py-5 sm:p-6">
         <form className="grid grid-cols-1 grid-rows-3" onSubmit={handleSubmit}>
           <label

@@ -2,6 +2,7 @@ import { UserMinusIcon, FaceFrownIcon } from "@heroicons/react/20/solid";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { useLogout } from "../../hooks/useLogout";
 import user2 from "../../assets/User2.svg";
+import pulse from "../../assets/pulse.svg";
 
 export default function MyAccount() {
   const { user } = useAuthContext();
@@ -30,9 +31,7 @@ export default function MyAccount() {
                 <h3 className="text-xl font-bold text-gray-900 sm:text-2xl">
                   {user ? user.username : null}
                 </h3>
-                <span className="ml-2.5 inline-block h-2 w-2 flex-shrink-0 rounded-full bg-green-600 animate-ping">
-                  <span className="sr-only">Online</span>
-                </span>
+                <img className="h-8 w-auto" src={pulse} />
               </div>
               <p className="text-sm text-gray-500">{user ? user.email : null}</p>
             </div>

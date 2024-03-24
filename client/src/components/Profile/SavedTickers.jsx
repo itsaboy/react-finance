@@ -1,8 +1,9 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FinanceContext } from "../../context/FinanceContext";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { FolderOpenIcon, FolderMinusIcon } from "@heroicons/react/20/solid";
 import Notification from "../Notification";
+import LoadingOverlay from "./LoadingOverlay";
 import { useTickerLookup } from "../../hooks/useTickerLookup";
 import { useDeleteTicker } from "../../hooks/useDeleteTicker";
 import spinner2 from "../../assets/spinner2.svg";
@@ -13,6 +14,7 @@ export default function SavedTickers({
   tickerID,
   setTickerID,
 }) {
+  const [watchlistLoading, setWatchlistLoading] = useState(false);
   const { watchlist, setWatchlist } = useContext(FinanceContext);
   const { user } = useAuthContext();
 
@@ -27,6 +29,7 @@ export default function SavedTickers({
     useDeleteTicker();
 
   useEffect(() => {
+    setWatchlistLoading(true);
     const getWatchlist = async () => {
       const req = "/api/watchlist";
       const res = await fetch(req, {
@@ -47,6 +50,7 @@ export default function SavedTickers({
 
     if (user) {
       getWatchlist();
+      setWatchlistLoading(false);
     }
   }, [user]);
 
@@ -87,9 +91,12 @@ export default function SavedTickers({
   };
 
   return (
-    <div className="divide-y divide-gray-200 overflow-hidden rounded-lg bg-gray-200 shadow-lg shadow-gray-800/40 grid-rows-1">
-      <h2 className="px-4 py-5 sm:px-6 bg-gray-100 border-b-2 border-gray-300">Saved tickers</h2>
-      {watchlist.length > 0 ? (
+    <div className="relative divide-y divide-gray-200 overflow-hidden rounded-lg bg-gray-200 shadow-lg shadow-gray-800/40 grid-rows-1">
+      <h2 className="px-4 py-5 sm:px-6 bg-gray-100 text-sm font-semibold text-gray-800 border-b-2 border-gray-300">
+        Saved tickers
+      </h2>
+      {watchlistLoading && <LoadingOverlay />}
+      {watchlist.length > 0 && (
         <div className="px-4 py-5 sm:p-6">
           <form
             className="grid grid-cols-1 grid-rows-3"
@@ -155,7 +162,8 @@ export default function SavedTickers({
             </div>
           </form>
         </div>
-      ) : (
+      )}
+      {watchlist.length < 1 && !watchlistLoading && (
         <div className="px-4 py-5 sm:p-6 bg-gray-200">
           <div className="grid grid-cols-1 grid-rows-5 place-items-center">
             <h4 className="w-full h-full flex justify-center items-center m-0">
